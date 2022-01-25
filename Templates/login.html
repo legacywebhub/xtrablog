@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Sign in | Xtra Blog</title>
+{% endblock%}
+
+{% block body %}
+<div class="col-12">
+    {% for message in messages %}
+    {{message}}
+    {% endfor %}
+</div>
+<hr class="tm-hr-primary" style="margin-bottom: 70px;">
+<div class="row tm-row tm-mb-120">
+    <div class="col-lg-5 tm-contact-left">
+        <h5 class="tm-color-primary tm-post-title tm-mb-60">Sign in</h5>
+        <form method="POST" action="" class="mb-5 ml-auto mr-0 tm-contact-form">
+            {% csrf_token %}                        
+            <div class="form-group row mb-4">
+                <div class="col-sm-9">
+                    <input class="form-control mr-0 ml-auto" name="username" placeholder="username" type="text" required>
+                </div>
+            </div>
+            <div class="form-group row mb-4">
+                <div class="col-sm-9">
+                    <input class="form-control mr-0 ml-auto" name="password" placeholder="password" type="password" required>
+                </div>
+            </div>
+            <div class="form-group row text-left">
+                <div class="col-12">
+                    <button class="tm-btn tm-btn-primary tm-btn-small" name="login-submit">Sign in</button>                        
+                </div>                            
+            </div>                                
+        </form>
+    </div>
+    <div class="col-lg-7 tm-contact-right">
+        <p class="tm-color-primary tm-post-title tm-mb-60"><i>Don't have an account?</i> Sign up</p>
+        <form method="POST" action="" class="mb-5 ml-auto mr-0 tm-contact-form">
+            {% csrf_token %}                        
+            <div class="form-group row mb-4">
+                <label for="name" class="col-sm-3 col-form-label text-right tm-color-primary">Username</label>
+                <div class="col-sm-9">
+                    <input class="form-control mr-0 ml-auto" name="username" id="name" type="text" required>                            
+                </div>
+            </div>
+            <div class="form-group row mb-4">
+                <label for="email" class="col-sm-3 col-form-label text-right tm-color-primary">Email</label>
+                <div class="col-sm-9">
+                    <input class="form-control mr-0 ml-auto" name="email" id="email" type="email" required>
+                </div>
+            </div>
+            <div class="form-group row mb-4">
+                <label for="subject" class="col-sm-3 col-form-label text-right tm-color-primary">Password</label>
+                <div class="col-sm-9">
+                    <input class="form-control mr-0 ml-auto" name="password1" id="subject" type="password" required>
+                </div>
+            </div>
+            <div class="form-group row mb-4">
+                <label for="subject" class="col-sm-3 col-form-label text-right tm-color-primary">Confirm password</label>
+                <div class="col-sm-9">
+                    <input class="form-control mr-0 ml-auto" name="password2" id="subject" type="password" required>
+                </div>
+            </div>
+            <div class="form-group row text-right">
+                <div class="col-12">
+                    <button class="tm-btn tm-btn-primary tm-btn-small" name="register-submit">Sign up</button>                        
+                </div>                            
+            </div>                                
+        </form>
+    </div>
+</div>
+{% endblock %}     
