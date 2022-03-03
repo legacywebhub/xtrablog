@@ -18,11 +18,15 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from django.conf.urls import handler404
-from Blog.sitemaps import StaticViewSitemap
+from Blog.sitemaps import StaticViewSitemap, PostSitemap
 from django.contrib.sitemaps.views import sitemap
 
+admin.site.site_title = "XtraBlog Admin"
+admin.site.site_header = "XTRABLOG ADMIN"
+
 sitemaps = {
-    'static': StaticViewSitemap
+    'static': StaticViewSitemap,
+    'post': PostSitemap
 }
 
 urlpatterns = [
@@ -31,4 +35,4 @@ urlpatterns = [
     path('', include('Blog.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
-handler404 = 'Extras.views.error_404'
+handler404 = 'Blog.views.error_404'

@@ -1,9 +1,23 @@
 from django.contrib.sitemaps import Sitemap
 from django.shortcuts import reverse
+from .models import Post
 
 class StaticViewSitemap(Sitemap):
     def items(self):
-        return ['contact', 'about',]
+        return [
+            'Blog:contact', 
+            'Blog:about',
+            'Blog:login',
+            'Blog:logout',
+            'Blog:post',
+            'Blog:blog',
+            'Blog:404',
+            'Blog:newsletters',
+        ]
 
     def location(self, item):
         return reverse(item)
+
+class PostSitemap(Sitemap):
+    def items(self):
+        return Post.objects.all()
