@@ -8,6 +8,9 @@
 
 {% block style %}
 <style>
+    .post-image {
+        width: 60%
+    }
     #reply-container{
         display: flex;
         justify-content: space-between;
@@ -26,19 +29,16 @@
 {% endblock %}
 
 {% block body %}
-{% for message in messages %}
-<h5>{{message}}</h5>
-{% endfor %}           
 <div class="row tm-row">
     <div class="col-12">
         <hr class="tm-hr-primary tm-mb-55">
         {% if post.image1 %}
-        <div style="width: 100%; margin-bottom: 20px;">
-        <img src="{{post.image1.url}}" width="500" alt="post image">
+        <div style="margin-bottom: 20px;">
+        <img src="{{post.image1.url}}" class="post-image" alt="">
         </div>
         {% elif post.image1_url %}
-        <div style="width: 100%; margin-bottom: 20px;">
-        <img src="{{post.image1_url}}" width="500" alt="post image">
+        <div style="margin-bottom: 20px;">
+        <img src="{{post.image1_url}}" class="post-image"alt="">
         </div>
         {% endif %}
     </div>
@@ -55,21 +55,21 @@
 
                 <div>
                 {% if post.image2 %}
-                <img src="{{ post.image2.url }}" alt="{{ post.slug }}" width="300"/><br>
+                <img src="{{ post.image2.url }}" alt="" class="post-image"/><br>
                 {% elif post.image2_url %}
-                <img src="{{ post.image2_url }}" alt="{{ post.slug }}" width="300"/><br>
+                <img src="{{ post.image2_url }}" alt="" class="post-image"/><br>
                 {% endif %}
 
                 {% if post.image3 %}
-                <img src="{{ post.image3.url }}" alt="{{ post.slug }}" width="300"/><br>
+                <img src="{{ post.image3.url }}" alt="" class="post-image"/><br>
                 {% elif post.image3_url %}
-                <img src="{{ post.image3_url }}" alt="{{ post.slug }}" width="300"/><br>
+                <img src="{{ post.image3_url }}" alt="" class="post-image"/><br>
                 {% endif %}
                 </div><br>
 
                 <div>
                 {% if post.video %}
-                <video width="954" height="535" controls class="tm-mb-40">
+                <video class="post-video" controls class="tm-mb-40">
                     <source src="{{post.video.url}}" type="video/mp4">							  
                     Your browser does not support the video tag.
                 </video><br>
@@ -102,6 +102,8 @@
 
                 {% if post.author.profile.rectangular_ad1 %}
                 <br><div style="text-align: center;">{{post.author.profile.rectangular_ad1|safe}}</div><br>
+                {% else %}
+                <br><div style="text-align: center;">{{xtrablog.rectangular_ad|safe}}</div><br>
                 {% endif %}
             </div>
             
@@ -128,6 +130,7 @@
                         <p>
                             {{ comment.comment}}
                         </p>
+                        <!-- Reply -->
                         <div class="d-flex justify-content-between" id="reply-container">
                             <a class="reply-comment tm-color-primary">REPLY</a>
                             <span style="width: 100px;"></span>
@@ -207,11 +210,15 @@
             </div>
         </div>
     </div>
+    <!-- Comment block ended -->
+    
     <aside class="col-lg-4 tm-aside-col">
         <div class="tm-post-sidebar">
             <hr class="mb-3 tm-hr-primary">
             {% if post.author.profile.square_ad %}
             <div style="text-align: center;">{{post.author.profile.square_ad|safe}}</div><br>
+            {% else %}
+            <div style="text-align: center;">{{xtrablog.square_ad|safe}}</div><br>
             {% endif %}
             <h2 class="mb-4 tm-post-title tm-color-primary">Categories</h2>
             <ul class="tm-mb-75 pl-5 tm-category-list">
@@ -224,7 +231,7 @@
             {% for related_post in related_posts %}
             <a href="{% url 'Blog:post' related_post.id %}" class="d-block tm-mb-40">
                 <figure>
-                    <img src="{{related_post.image1.url}}" alt="post image" class="mb-3 img-fluid">
+                    <!-- <img src="{{related_post.image1.url}}" alt="post image" class="mb-3 img-fluid"> -->
                     <figcaption class="tm-color-primary">{{related_post.title}}</figcaption>
                 </figure>
             </a>

@@ -6,10 +6,8 @@
 {% endblock %}
 
 {% block body %}
-{% for message in messages %}
-<h4>{{message}}</h4>
-{% endfor %}
 <div class="row tm-row">
+    {% if posts %}
     {% for post in posts reversed %}
     <article class="col-12 col-md-6 tm-post">
         <hr class="tm-hr-primary">
@@ -20,10 +18,10 @@
             {% if post.new == True %}
             <span class="position-absolute tm-new-badge">New</span>
             {% endif %}
-            <h2 class="tm-pt-30 tm-color-primary tm-post-title">{{post.slug}}</h2>
+            <h2 class="tm-pt-30 tm-color-primary tm-post-title">{{post.title}}</h2>
         </a>                    
         <p class="tm-pt-30">
-           {{post.paragraph1|truncatewords:25}}
+           {{post.content|truncatewords:40|safe}}
         </p>
         <div class="d-flex justify-content-between tm-pt-45">
             <span class="tm-color-primary">{{post.category.get_category_name_display}}</span>
@@ -36,7 +34,9 @@
         </div>
     </article>
     {% endfor %}
-
+    {% else %}
+    <h3 style="margin:50px">Sorry.. there is no posts related to your search</h3>
+    {% endif %}
 </div>
 <div class="row tm-row tm-mt-100 tm-mb-75">
     <div class="tm-prev-next-wrapper">

@@ -1,12 +1,11 @@
-<script type="text/javascript">
 var form = document.getElementById('comment-form')
 var formButton = document.getElementById('comment-button')
 var post = formButton.dataset.post
 
 form.addEventListener('submit', function(e){
-  e.preventDefault()
+  e.preventDefault();
   var comment = form.comment.value
-  var url = '{% url 'Blog:post_comment' %}'
+  var url = "{% url 'Blog:post_comment' %}"
 
   formData = {
   'comment': comment,
@@ -29,4 +28,3 @@ form.addEventListener('submit', function(e){
         location.reload()
       });
 });
-</script>

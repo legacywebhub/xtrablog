@@ -8,11 +8,8 @@ class StaticViewSitemap(Sitemap):
             'Blog:contact', 
             'Blog:about',
             'Blog:login',
-            'Blog:logout',
-            'Blog:post',
             'Blog:blog',
-            'Blog:404',
-            'Blog:newsletters',
+            'Blog:newsletter',
         ]
 
     def location(self, item):

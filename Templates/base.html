@@ -13,6 +13,9 @@
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/templatemo-xtra-blog.css' %}" rel="stylesheet">
     <style>
+        .fa-times {
+            cursor: pointer;
+        }
         #tm-header {
             overflow-y: scroll;
         }
@@ -26,6 +29,15 @@
             text-decoration: underline;
             font-weight: bold;
             font-size: 20px;
+        }
+        .error {
+            color: rgba(255, 0, 0, 0.808);
+        }
+        .success {
+            color: rgba(1, 170, 1, 0.801);
+        }
+        .info {
+            color: rgba(3, 51, 211, 0.705);
         }
     </style>
 
@@ -51,7 +63,7 @@
         return cookieValue;
         }
         const csrftoken = getCookie('csrftoken');
-        </script>
+    </script>
 <!--
     
 TemplateMo 553 Xtra Blog
@@ -66,9 +78,9 @@ https://templatemo.com/tm-553-xtra-blog
             <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>
-            <div class="tm-site-header" style="margin-bottom: 30px;">
-                <div class="mb-3 mx-auto tm-site-logo"><i class="fas fa-times fa-2x"></i></div>            
-                <h1 class="text-center">Xtra Blog</h1>
+            <div class="mb-3 mx-auto" id="close"><i class="fas fa-times fa-2x"></i></div>
+            <div class="tm-site-header mb-3">         
+                <h1 class="text-center"><a href="/"  style="color: #fff;">{{xtrablog.name}}</a></h1>
             </div>
             <nav class="tm-nav" id="tm-nav">
                 <ul style="list-style: none;" id="categories-list">
@@ -83,30 +95,33 @@ https://templatemo.com/tm-553-xtra-blog
                         Home
                     </a></li>
                     {% if user.is_authenticated %}
-                    <li class="tm-nav-item"><a href="logout" class="tm-nav-link">
+                    <li class="tm-nav-item"><a href="{% url 'Blog:logout' %}" class="tm-nav-link">
                         <i class="fas fa-sign-out-alt"></i>
                         {{user.username}}<br> Sign out
                     </a></li>
                     {% else %}
-                    <li class="tm-nav-item"><a href="login" class="tm-nav-link">
+                    <li class="tm-nav-item"><a href="{% url 'Blog:login' %}" class="tm-nav-link">
                         <i class="fas fa-sign-in-alt"></i>
                         Sign in
                     </a></li>
                     {% endif %}
-                    <li class="tm-nav-item"><a href="about" class="tm-nav-link">
+                    <li class="tm-nav-item"><a href="{% url 'Blog:about' %}" class="tm-nav-link">
                         <i class="fas fa-users"></i>
-                        About Xtra
+                        About Us
                     </a></li>
-                    <li class="tm-nav-item"><a href="contact" class="tm-nav-link">
+                    <li class="tm-nav-item"><a href="{% url 'Blog:contact' %}" class="tm-nav-link">
                         <i class="far fa-comments"></i>
                         Contact Us
                     </a></li>
+                    {% if user.is_superuser %}
+                    <li class="tm-nav-item"><a href="{% url 'Blog:newsletter' %}" class="tm-nav-link">
+                        <i class="fa fa-share" aria-hidden="true"></i>
+                        Newsletter
+                    </a></li>
+                    {% endif %}
                 </ul>
             </nav>
             <div style="margin-right: 20px;">
-                {% for message in messages %}
-                <h4>{{message}}</h4>
-                {% endfor %}
                 <form method="POST" class="form-inline tm-mb-80 tm-search-form">
                 {% csrf_token %}
                     <p style="color:#fafafa; font-size: 17px; margin-left:0;">Subscribe to get post updates, contents and offers!</p>
@@ -115,40 +130,37 @@ https://templatemo.com/tm-553-xtra-blog
                 </form>
             </div> 
             <div class="tm-mb-65">
-                {% if contact.facebook_link %}
-                <a rel="nofollow" href="{{contact.facebook_link}}" class="tm-social-link">
+                {% if xtrablog.facebook_link %}
+                <a rel="nofollow" target="_blank" href="{{xtrablog.facebook_link}}" class="tm-social-link">
                     <i class="fab fa-facebook tm-social-icon"></i>
                 </a>
                 {% endif %}
-                {% if contact.twitter_link %}
-                <a href="{{contact.twitter_link}}" class="tm-social-link">
+                {% if xtrablog.twitter_link %}
+                <a href="{{xtrablog.twitter_link}}" target="_blank" class="tm-social-link">
                     <i class="fab fa-twitter tm-social-icon"></i>
                 </a>
                 {% endif %}
-                {% if contact.instagram_link %}
-                <a href="{{contact.instagram_link}}" class="tm-social-link">
+                {% if xtrablog.instagram_link %}
+                <a href="{{xtrablog.instagram_link}}" target="_blank" class="tm-social-link">
                     <i class="fab fa-instagram tm-social-icon"></i>
                 </a>
                 {% endif %}
-                {% if contact.linked_in %}
-                <a href="{{contact.linked_in}}" class="tm-social-link">
+                {% if xtrablog.linked_in %}
+                <a href="{{xtrablog.linked_in}}" target="_blank"  class="tm-social-link">
                     <i class="fab fa-linkedin tm-social-icon"></i>
                 </a>
                 {% endif %}
-                {% if contact.youtube_link %}
-                <a href="{{contact.youtube_link}}" class="tm-social-link">
+                {% if xtrablog.youtube_link %}
+                <a href="{{xtrablog.youtube_link}}" target="_blank" class="tm-social-link">
                     <i class="fab fa-youtube tm-social-icon"></i>
                 </a>
                 {% endif %}
-                {% if contact.whatsapp_link %}
-                <a href="{{contact.whatsapp_link}}" class="tm-social-link">
-                    <i class="fab fa-fa-whatsapp tm-social-icon"></i>
+                {% if xtrablog.whatsapp_link %}
+                <a href="{{xtrablog.whatsapp_link}}"target="_blank"  class="tm-social-link">
+                    <i class="fa fa-whatsapp tm-social-icon"></i>
                 </a>
                 {% endif %}
             </div>
-            <p class="tm-mb-80 pr-5 text-white">
-                Xtra Blog is a multi-purpose HTML template from TemplateMo website. Left side is a sticky menu bar. Right side content will scroll up and down.
-            </p>
         </div>
     </header>
     <div class="container-fluid">
@@ -164,7 +176,10 @@ https://templatemo.com/tm-553-xtra-blog
                         </button>                                
                     </form>
                 </div>                
-            </div> 
+            </div>
+            {% for message in messages %}
+            <h5 {% if message.tags %}class="{{ message.tags }}"{% endif %}>{{message}}</h5>
+            {% endfor %}
 
             {% block body %}
             {% endblock %}
@@ -173,6 +188,7 @@ https://templatemo.com/tm-553-xtra-blog
                 <hr class="col-12">
                 <div class="col-md-6 col-12 tm-color-gray">
                     Design: <a rel="nofollow" target="_parent" href="https://templatemo.com" class="tm-external-link">TemplateMo</a>
+                    Developed: <a rel="follow" target="_parent" href="#" class="tm-external-link">Legacy Tech</a>
                 </div>
                 <div class="col-md-6 col-12 tm-color-gray tm-copyright">
                     Copyright 2020 Xtra Blog Company Co. Ltd.
@@ -182,35 +198,9 @@ https://templatemo.com/tm-553-xtra-blog
     </div>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/templatemo-script.js' %}"></script>
-
-    <script type="text/javascript">
-        let url = 'Blog:update';
-        let update = false;
-
-        setInterval(()=>{
-            update = true;
-
-            if(update==true){
-                updatePosts();
-            }
-
-            update = false;
-        },100000000)
-
-
-        async function updatePosts(){
-            await fetch(url, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken
-            },
-            body: JSON.stringify({'update':update})
-            })
-            .then((res)=>{
-                console.log(res)
-            })
-        }
-    </script>
+    <!-- script for google analytics -->
+    {% if xtrablog.google_analytics %}
+    {{xtrablog.google_analytics|safe}}
+    {% endif %}
 </body>
 </html>

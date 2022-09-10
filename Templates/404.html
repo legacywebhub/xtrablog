@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Error 404 | Xtra Blog</title>
+{% endblock %}
+
+{% block style %}
+<style>
+section {
+    min-height: 60vh;
+    font-size: 16px;
+}
+#error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+</style>
+{% endblock %}
+           
+{% block body %}
+<section>
+<div class="row tm-row tm-mb-45">
+<div class="col-12">
+    <hr class="tm-hr-primary tm-mb-55">
+    <div id="error">
+    <h2>Error 404</h2>
+    <p>Sorry the page you are looking for has either been moved or deleted</p>
+    <img src="{% static 'img/error404.jpg' %}" width="500" class="img-fluid">
+    </div>
+</div>
+</div>
+</section>
+{% endblock %}

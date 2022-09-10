@@ -17,7 +17,7 @@
             </div>
             <h2 class="tm-pt-30 tm-color-primary tm-post-title">{{post.title}}</h2>
         </a>                    
-        <p class="tm-pt-30">{{post.content|safe|truncatewords:20}}</p>
+        <p class="tm-pt-30">{{post.content|safe|truncatewords:50}}</p>
         <div class="d-flex justify-content-between tm-pt-45">
             <span class="tm-color-primary">{{post.category.get_category_name_display}}</span>
             <span class="tm-color-primary">{{post.date}}</span>

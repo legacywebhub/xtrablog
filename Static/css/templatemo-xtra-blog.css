@@ -55,8 +55,12 @@ hr {
 }
 
 .tm-site-header {
-    margin-top: 50px;
+    margin-top: 20px;
     margin-bottom: 115px;
+}
+
+#close {
+    display: none;
 }
 
 .tm-site-logo {
@@ -203,8 +207,8 @@ ul {
 .tm-post-link img {
     position: relative;
 	display: block;
-	min-height: 100%;
-	max-width: 100%;
+	height: 250px;
+	width: 100%;
 	opacity: 0.8;
 }
 
@@ -426,12 +430,26 @@ a:hover figcaption { color: #056767; }
 .tm-contact-form label { font-size: 1.4rem; }
 .tm-contact-form .form-group { display: flex; }
 
+footer {
+    font-size: 13px;
+}
+
+@media  (min-width: 1540px) {
+    .post-video {
+        width: 80%;
+    }
+}
+
 @media (max-width: 1540px) {
     .tm-header { width: 320px; }
 
     .tm-main {
         margin-left: 320px;
         width: calc(100% - 320px);
+    }
+
+    .post-video {
+        width: 70%;
     }
 }
 
@@ -579,6 +597,14 @@ a:hover figcaption { color: #056767; }
     }
 
     .tm-contact-right { padding-left: 15px; }
+
+    .post-image {
+        width: 50%
+    }
+
+    .post-video {
+        width: 60%;
+    }
 }
 
 @media (max-width: 575px) {
@@ -595,4 +621,20 @@ a:hover figcaption { color: #056767; }
 
 @media (max-width: 380px) {
     .tm-person img { max-width: 120px; }
+}
+
+@media (max-width: 350px) {
+    .tm-site-header {
+        margin-top: 50px;
+    }
+
+    #close {
+        display: contents;
+    }
+    .post-image {
+        width: 80%
+    }
+    .post-video {
+        width: 100%;
+    }
 }

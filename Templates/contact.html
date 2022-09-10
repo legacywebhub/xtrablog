@@ -6,16 +6,16 @@
 {% endblock%}
 
 {% block body %}
-<div class="row tm-row tm-mb-45">
+<!-- <div class="row tm-row tm-mb-45">
     <div class="col-12">
         <hr class="tm-hr-primary tm-mb-55">
-        <div class="gmap_canvas"> <!-- Google Map -->
+        <div class="gmap_canvas">
             <iframe width="100%" height="477" id="gmap_canvas"
                 src="https://maps.google.com/maps?q=Av.+L%C3%BAcio+Costa,+Rio+de+Janeiro+-+RJ,+Brazil&t=&z=13&ie=UTF8&iwloc=&output=embed"
                 frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
         </div>
     </div>                
-</div>
+</div> -->
 <div class="row tm-row tm-mb-120">
     <div class="col-12">
         {% for message in messages %}
@@ -59,47 +59,47 @@
     </div>
     <div class="col-lg-5 tm-contact-right">
         <address class="mb-4 tm-color-gray">
-            {{contact.address}}
+            {{xtrablog.address}}
         </address>
         <span class="d-block">
             Tel:
-            <a href="tel:{{contact.phone}}" class="tm-color-gray">{{contact.phone}}</a>
+            <a href="tel:{{xtrablog.phone}}" class="tm-color-gray">{{xtrablog.phone}}</a>
         </span>
-        <span class="mb-4 d-block">
+        <span class="d-block">
             Email:
-            <a href="mailto:{{contact.email}}" class="tm-color-gray">{{contact.email}}</a>
+            <a href="mailto:{{xtrablog.email1}}" class="tm-color-gray">{{xtrablog.email1}}</a>
         </span>
-        <p class="mb-5 tm-line-height-short">
-            Maecenas eu mi eu dui cursus
-            consequat non eu metus. Morbi ac
-            turpis eleifend, commodo purus
-            eget, commodo mauris.
-        </p>
+        {% if xtrablog.email2 %}
+        <span class="mb-4 d-block">
+            Email2:
+            <a href="mailto:{{xtrablog.email2}}" class="tm-color-gray">{{xtrablog.email2}}</a>
+        </span>
+        {% endif %}
         <ul class="tm-social-links">
-            {% if contact.facebook_link %}
+            {% if xtrablog.facebook_link %}
             <li class="mb-2">
-                <a href="{{contact.facebook_link}}" class="d-flex align-items-center justify-content-center">
+                <a href="{{xtrablog.facebook_link}}" class="d-flex align-items-center justify-content-center">
                     <i class="fab fa-facebook"></i>
                 </a>
             </li>
             {% endif %}
-            {% if contact.twitter_link %}
+            {% if xtrablog.twitter_link %}
             <li class="mb-2">
-                <a href="{{contact.twitter_link}}" class="d-flex align-items-center justify-content-center">
+                <a href="{{xtrablog.twitter_link}}" class="d-flex align-items-center justify-content-center">
                     <i class="fab fa-twitter"></i>
                 </a>
             </li>
             {% endif %}
-            {% if contact.youtube_link %}
+            {% if xtrablog.youtube_link %}
             <li class="mb-2">
-                <a href="{{contact.youtube_link}}" class="d-flex align-items-center justify-content-center">
+                <a href="{{xtrablog.youtube_link}}" class="d-flex align-items-center justify-content-center">
                     <i class="fab fa-youtube"></i>
                 </a>
             </li>
             {% endif %}
-            {% if contact.instagram_link %}
+            {% if xtrablog.instagram_link %}
             <li class="mb-2">
-                <a href="{{contact.instagram_link}}" class="d-flex align-items-center justify-content-center mr-0">
+                <a href="{{xtrablog.instagram_link}}" class="d-flex align-items-center justify-content-center mr-0">
                     <i class="fab fa-instagram"></i>
                 </a>
             </li>

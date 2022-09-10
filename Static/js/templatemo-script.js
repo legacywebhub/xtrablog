@@ -15,4 +15,8 @@ $(function() {
       $("#tm-nav .nav-link").click(function(e) {
         $(".tm-header").removeClass("show");
       });
+
+      $(".fa-times").click(function(e) {
+        $(".tm-header").removeClass("show");
+      });
 });
