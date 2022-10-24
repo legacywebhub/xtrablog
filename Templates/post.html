@@ -11,6 +11,9 @@
     .post-image {
         width: 60%
     }
+    .user-name {
+        white-space: wrap;
+    }
     #reply-container{
         display: flex;
         justify-content: space-between;
@@ -55,15 +58,15 @@
 
                 <div>
                 {% if post.image2 %}
-                <img src="{{ post.image2.url }}" alt="" class="post-image"/><br>
+                <img src="{{ post.image2.url }}" alt="" class="post image"/><br><br>
                 {% elif post.image2_url %}
-                <img src="{{ post.image2_url }}" alt="" class="post-image"/><br>
+                <img src="{{ post.image2_url }}" alt="" class="post image"/><br><br>
                 {% endif %}
 
                 {% if post.image3 %}
-                <img src="{{ post.image3.url }}" alt="" class="post-image"/><br>
+                <img src="{{ post.image3.url }}" alt="" class="post image"/><br><br>
                 {% elif post.image3_url %}
-                <img src="{{ post.image3_url }}" alt="" class="post-image"/><br>
+                <img src="{{ post.image3_url }}" alt="" class="post image"/><br><br>
                 {% endif %}
                 </div><br>
 
@@ -78,23 +81,14 @@
                     <source src="{{post.video_url}}" type="video/mp4">							  
                     Your browser does not support the video tag.
                 </video><br>
+                {% elif post.youtube %}
+                {{post.youtube|safe}}<br>
                 {% endif %}
                 </div>
-
-                <div>
-                {% if post.youtube %}
-                {{post.youtube|safe}}
-                {% endif %}
-                </div>
-
-                {% if post.link %}
-                <br>
-                <p><a href="{{post.link}}" style="color:#F03C02; margin-right:20px"><u>{{post.link_description}}</u></a></p>
-                {% endif %}
 
                 {% if post.document %}
                 <div>
-                <a href="/Media/{{post.document}}" download>Download File</a>
+                <a href="/xtrablog/{{post.document}}" download>Download File</a>
                 </div>
                 {% endif %}
 
@@ -121,9 +115,9 @@
                         <img src="{% static 'img/default.jpg' %}" width="80" alt="user image" class="mb-2 rounded-circle img-thumbnail">
                         {% endif %}
                         {% if comment.name %}
-                        <figcaption class="tm-color-primary text-center">{{comment.name}}</figcaption>
+                        <figcaption class="tm-color-primary text-center user-name">{{comment.name}}</figcaption>
                         {% else %}
-                        <figcaption class="tm-color-primary text-center">{{comment.user.username}}</figcaption>
+                        <figcaption class="tm-color-primary text-center user-name">{{comment.user.username}}</figcaption>
                         {% endif %}
                     </figure>
                     <div>
@@ -166,9 +160,9 @@
                                 <img src="{% static 'img/default.jpg' %}" width="80" alt="user image" class="mb-2 rounded-circle img-thumbnail">
                                 {% endif %}
                                 {% if reply.name %}
-                                <figcaption class="tm-color-primary text-center">{{reply.name}}</figcaption>
+                                <figcaption class="tm-color-primary text-center user-name">{{reply.name}}</figcaption>
                                 {% else %}
-                                <figcaption class="tm-color-primary text-center">{{reply.user.username}}</figcaption>
+                                <figcaption class="tm-color-primary text-center user-name">{{reply.user.username}}</figcaption>
                                 {% endif %}
                             </figure>
                             <div>

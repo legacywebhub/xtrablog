@@ -1,4 +1,5 @@
 from turtle import pos
+from unicodedata import category
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.http import JsonResponse, HttpResponse
@@ -69,7 +70,7 @@ def logout(request):
 
 
 def posts(request):
-    p = Paginator(Post.objects.all(), 12)
+    p = Paginator(Post.objects.all().order_by('-created_at'), 12)
     page = request.GET.get('page')
     posts = p.get_page(page)
 
@@ -166,7 +167,20 @@ def post(request, id):
 
 
 def result(request, search):
-    results = Post.objects.filter(title__contains=search) or Post.objects.filter(content__contains=search)
+    category_results = Post.objects.filter(category=search)
+    title_results = Post.objects.filter(title__contains=search)
+    results = []
+
+    if category_results:
+        for result in category_results:
+            if result not in results:
+                results.append(result)
+    
+    if title_results:
+        for result in title_results:
+            if result not in results:
+                results.append(result)
+
     p = Paginator(results, 12)
     page = request.GET.get('page')
     posts = p.get_page(page)
@@ -209,22 +223,24 @@ def newsletter(request):
                 if file in request.POST:
                     file = request.POST['file']
 
-                    email = EmailMessage(subject, message, xtrablog.email1, mail_list)
-                    email.content_subtype = 'html'
-                    email.attach(file.name, file.read(), file.content_type)
-                    email.send()
-                    mail = SubscribersMail(title=subject, message=message)
-                    mail.save()
-                    return HttpResponse('Message and file succesfully sent to mail list')
+                    try:
+                        email = EmailMessage(subject, message, xtrablog.email1, mail_list)
+                        email.content_subtype = 'html'
+                        email.attach(file.name, file.read(), file.content_type)
+                        email.send()
+                        messages.success(request, 'Message and file succesfully sent to mail list')
+                    except:
+                        messages.error(request, 'Sorry... There was an error while forwarding newsletter and file')
+                        
                 else:
-                    send_mail(
-                    subject, message, xtrablog.email1, mail_list, fail_silently=False
-                    )
-                    mail = SubscribersMail(title=subject, message=message)
-                    mail.save()
-                    return HttpResponse('Message succesfully sent to mail list')
+                    try:
+                        send_mail(subject, message, xtrablog.email1, mail_list, fail_silently=False)
+                        messages.success(request, 'Message succesfully sent to mail list')
+                    except:
+                        messages.error(request, 'Sorry... There was an error while forwarding newsletter')
+
             else:
-                messages.error(request, 'Newsletter password is incorrect')
+                messages.error(request, 'Newsletter password is incorrect!')
         elif 'subscribe-submit' in request.POST:
             subscribe = request.POST['subscribe']
             subscribed = Subscriber.objects.filter(email=subscribe).exists()

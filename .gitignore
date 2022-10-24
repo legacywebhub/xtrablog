@@ -129,5 +129,7 @@ dmypy.json
 .pyre/
 todo-list.txt
 Media/
+media/
 StaticFiles/
 staticfiles/
+xtrablog/

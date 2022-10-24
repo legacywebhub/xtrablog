@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'xtrablog.up.railway.app']
 
 
 # Application definition
@@ -85,6 +85,18 @@ DATABASES = {
     }
 }
 
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': config('DB_ENGINE'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT')
+    }
+}
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -124,12 +136,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR / 'Static'),)
-#STATIC_ROOT = os.path.join(BASE_DIR / 'StaticFiles')
+#STATIC_ROOT = os.path.join(BASE_DIR / 'staticfiles')
 
 # MEDIA SETTINGS
 
-MEDIA_URL = '/Media/'
-MEDIA_ROOT = os.path.join(BASE_DIR / 'Media')
+MEDIA_URL = '/xtrablog/'
+MEDIA_ROOT = os.path.join(BASE_DIR / 'xtrablog')
 # DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # CLOUDINARY_STORAGE = {
 #     'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
@@ -151,4 +163,3 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
-

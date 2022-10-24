@@ -12,16 +12,19 @@
     <article class="col-12 col-md-6 tm-post">
         <hr class="tm-hr-primary">
         <a href="{% url 'Blog:post' post.id %}" class="effect-lily tm-post-link tm-pt-60">
+            {% if post.image1 %}
             <div class=" tm-post-link-inner">
                 <img src="{{post.image1.url}}" alt="post image" class="img-fluid">                            
             </div>
-            {% if post.new == True %}
-            <span class="position-absolute tm-new-badge">New</span>
+            {% elif post.image1_url %}
+            <div class=" tm-post-link-inner">
+                <img src="{{post.image1_url}}" alt="Image" class="img-fluid">                            
+            </div>
             {% endif %}
             <h2 class="tm-pt-30 tm-color-primary tm-post-title">{{post.title}}</h2>
         </a>                    
         <p class="tm-pt-30">
-           {{post.content|truncatewords:40|safe}}
+           {{post.content|truncatewords:30|safe}}
         </p>
         <div class="d-flex justify-content-between tm-pt-45">
             <span class="tm-color-primary">{{post.category.get_category_name_display}}</span>

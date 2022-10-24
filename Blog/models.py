@@ -9,14 +9,14 @@ class XtraBlog(models.Model):
     name = models.CharField(max_length=50, blank=False)
     email1 = models.EmailField(max_length=50, blank=False, null=False)
     email2 = models.EmailField(max_length=50, blank=True, null=True)
-    address = models.CharField(max_length=100, blank=True)
-    phone = models.CharField(max_length=25, blank=True)
-    whatsapp  = models.IntegerField(blank=True, null=True)
-    whatsapp_link  = models.CharField(max_length=200, blank=True)
-    facebook_link  = models.CharField(max_length=200, blank=True)
-    instagram_link  = models.CharField(max_length=200, blank=True)
-    twitter_link  = models.CharField(max_length=200, blank=True)
-    linked_in = models.CharField(max_length=200, blank=True)
+    address = models.CharField(max_length=100, blank=True, null=True)
+    phone = models.CharField(max_length=25, blank=True, null=True)
+    whatsapp  = models.CharField(max_length=25, blank=True, null=True, help_text='whatsapp number')
+    whatsapp_link  = models.CharField(max_length=200, blank=True, null=True)
+    facebook_link  = models.CharField(max_length=200, blank=True, null=True)
+    instagram_link  = models.CharField(max_length=200, blank=True, null=True)
+    twitter_link  = models.CharField(max_length=200, blank=True, null=True)
+    linked_in = models.CharField(max_length=200, blank=True, null=True)
     youtube_link = models.CharField(max_length=200, blank=True, null=True)
     newsletter_password = models.CharField(max_length=200, blank=True, null=True)
     google_analytics = models.TextField(max_length=2000, blank=True, null=True)
@@ -35,8 +35,8 @@ class XtraBlog(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_pic = models.ImageField(upload_to='xtrablog/images/users', default='xtrablog/images/users/default.jpg', blank=True)
-    country = models.CharField(max_length=50, blank=True)
+    profile_pic = models.ImageField(upload_to='images/users',blank=True, null=True)
+    country = models.CharField(max_length=50, blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
     bio = models.TextField(max_length=750, blank=True, null=True)
 
@@ -52,16 +52,20 @@ class PostCategory(models.Model):
     ('tutorials', 'Tutorials'),
     ('finance', 'Finance'),
     ('monetary', 'Monetary'),
-    ('online-business', 'Online Business'),
+    ('online business', 'Online Business'),
     ('lifestyle', 'Lifestyle'),
     ('sports', 'Sports'),
     ('politics', 'Politics'),
     ('health', 'Health'),
     ('science', 'Science'),
+    ('art', 'Art'),
+    ('news', 'News'),
+    ('commercial', 'Commercial'),
     ('entertainment', 'Entertainment'),
     ('programming', 'Programming'),
-    ('how-to', 'How-to'),
-    ('educational', 'Educational')
+    ('how tos', 'How tos'),
+    ('educational', 'Educational'),
+    ('others', 'Others')
     )
     category_name =models.CharField(max_length=50,  choices=CATEGORY, primary_key=True)
 
@@ -75,21 +79,26 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey(PostCategory, on_delete=models.SET_NULL, db_constraint=False, blank=False, null=True)
     title = models.CharField(max_length=200, blank=False, null=False)
-    image1 = models.ImageField(upload_to='xtrablog/images/blog', blank=True, null=True)
+    image1 = models.ImageField(upload_to='images/blog', blank=True, null=True)
     image1_url = models.URLField(max_length=3000, blank=True, null=True)
-    image2 = models.ImageField(upload_to='xtrablog/images/blog', blank=True, null=True)
+    image2 = models.ImageField(upload_to='images/blog', blank=True, null=True)
     image2_url = models.URLField(max_length=3000, blank=True, null=True)
-    image3 = models.ImageField(upload_to='xtrablog/images/blog', blank=True, null=True)
+    image3 = models.ImageField(upload_to='images/blog', blank=True, null=True)
     image3_url = models.URLField(max_length=3000, blank=True, null=True)
-    video = models.FileField(upload_to='xtrablog/videos', blank=True, null=True)
+    video = models.FileField(upload_to='videos', blank=True, null=True)
     video_url = models.URLField(max_length=3000, blank=True, null=True)
-    youtube = models.URLField(max_length=3000, blank=True, null=True)
-    document = models.FileField(upload_to='xtrablog/documents', blank=True, null=True)
+    youtube = models.TextField(max_length=3000, blank=True, null=True, help_text='Youtube video embedded code')
+    document = models.FileField(upload_to='documents', blank=True, null=True)
     content = RichTextField(max_length=25000, blank=False, null=False)
-    link = models.CharField(max_length=3000, blank=True, null=True)
-    link_description = models.CharField(max_length=250, blank=True, null=True)
     meta_keywords = models.CharField(max_length=150, blank=False, null=True)
-    meta_description = models.CharField(max_length=160, blank=False, null=True)
+    meta_description = models.CharField(max_length=250, blank=False, null=True)
+
+    @property
+    def new(self):
+        status = False
+        if self.id == Post.objects.last().id:
+            status = True
+        return status
     
 
     @property
@@ -156,16 +165,6 @@ class Subscriber(models.Model):
 
     def __str__(self):
         return self.email
-
-
-class SubscribersMail(models.Model):
-    title = models.CharField(max_length=1000, blank=False, null=False)
-    image = models.FileField(upload_to="xtrablog/images/mails", blank=True, null=True)
-    message = models.TextField(max_length=3000, blank=True, null=True)
-    sent = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.title
 
 
 class Message(models.Model):

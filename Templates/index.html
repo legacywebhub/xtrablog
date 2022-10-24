@@ -8,16 +8,25 @@
 {% block body %}
 <div class="row tm-row">
 
-    {% for post in posts reversed %}
+    {% for post in posts %}
     <article class="col-12 col-md-6 tm-post">
         <hr class="tm-hr-primary">
         <a href="{% url 'Blog:post' post.id %}" class="effect-lily tm-post-link tm-pt-60">
+            {% if post.image1 %}
             <div class=" tm-post-link-inner">
                 <img src="{{post.image1.url}}" alt="Image" class="img-fluid">                            
             </div>
+            {% elif post.image1_url %}
+            <div class=" tm-post-link-inner">
+                <img src="{{post.image1_url}}" alt="Image" class="img-fluid">                            
+            </div>
+            {% endif %}
+            {% if post.new %}
+            <span class="position-absolute tm-new-badge">New</span>
+            {% endif %}
             <h2 class="tm-pt-30 tm-color-primary tm-post-title">{{post.title}}</h2>
         </a>                    
-        <p class="tm-pt-30">{{post.content|safe|truncatewords:50}}</p>
+        <p class="tm-pt-30">{{post.content|safe|truncatewords:30}}</p>
         <div class="d-flex justify-content-between tm-pt-45">
             <span class="tm-color-primary">{{post.category.get_category_name_display}}</span>
             <span class="tm-color-primary">{{post.date}}</span>
@@ -33,13 +42,13 @@
 </div>
 <div class="row tm-row tm-mt-100 tm-mb-75">
     <div class="tm-prev-next-wrapper">
+        <span style="margin-left: 3px; padding: 5px 30px; font-weight: bold; font-size:20px;">Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
         {% if posts.has_previous %}
         <a href="?page={{ posts.previous_page_number }}" class="mb-2 tm-btn tm-btn-primary tm-prev-next tm-mr-20">Prev</a>
         {% endif %}
         {% if posts.has_next %}
         <a href="?page={{ posts.next_page_number }}" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
         {% endif %}
-        <span style="margin-left: 3px; padding: 5px 30px; font-weight: bold; font-size:20px;">Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
     </div>
     <div class="tm-paging-wrapper">
         <!-- <span class="d-inline-block mr-3">Page</span> -->
