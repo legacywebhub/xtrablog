@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'xtrablog.up.railway.app']
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -149,6 +150,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR / 'xtrablog')
 #     'API_SECRET': config('CLOUDINARY_API_SECRET'),
 #     'INVALID_VIDEO_ERROR_MESSAGE': 'Please upload a valid video file.',
 # }
+
+# JAZZMIN SETTINGS
+JAZZMIN_SETTINGS = {
+    "site_title": "XtraBlog Admin",
+    "site_header": "XTRABLOG ADMIN"
+}
 
 
 # Default primary key field type
