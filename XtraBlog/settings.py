@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -81,14 +82,6 @@ WSGI_APPLICATION = 'XtraBlog.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-'''
-DATABASES = {
-    'default': {
         'ENGINE': config('DB_ENGINE'),
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
@@ -97,7 +90,6 @@ DATABASES = {
         'PORT': config('DB_PORT')
     }
 }
-'''
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -137,19 +129,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR / 'Static'),)
-#STATIC_ROOT = os.path.join(BASE_DIR / 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR / 'staticfiles')
 
 # MEDIA SETTINGS
 
 MEDIA_URL = '/xtrablog/'
 MEDIA_ROOT = os.path.join(BASE_DIR / 'xtrablog')
-# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-# CLOUDINARY_STORAGE = {
-#     'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
-#     'API_KEY': config('CLOUDINARY_API_KEY'),
-#     'API_SECRET': config('CLOUDINARY_API_SECRET'),
-#     'INVALID_VIDEO_ERROR_MESSAGE': 'Please upload a valid video file.',
-# }
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
+    'INVALID_VIDEO_ERROR_MESSAGE': 'Please upload a valid video file.',
+}
 
 # JAZZMIN SETTINGS
 JAZZMIN_SETTINGS = {
@@ -170,3 +162,40 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
+
+'''
+# Logger
+LOGGING = {
+    'version':1,
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+        'django.server': {
+            'handlers': ['server_file'],
+            'level': 'DEBUG',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': './Logs/debug.log',
+           'formatter': 'simple'
+        },
+        'server_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': './Logs/debug2.log',
+           'formatter': 'simple'
+        }
+    },
+    'formatters': {
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        }
+    }
+}
+'''
