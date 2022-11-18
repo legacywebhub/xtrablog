@@ -225,7 +225,11 @@
             {% for related_post in related_posts %}
             <a href="{% url 'Blog:post' related_post.id %}" class="d-block tm-mb-40">
                 <figure>
-                    <!-- <img src="{{related_post.image1.url}}" alt="post image" class="mb-3 img-fluid"> -->
+                    {% if related_post.image1 %}
+                    <img src="{{related_post.image1.url}}" alt="post image" class="mb-3 img-fluid">
+                    {% elif related_post.image1_url %}
+                    <img src="{{related_post.image1_url}}" alt="post image" class="mb-3 img-fluid">
+                    {% endif %}
                     <figcaption class="tm-color-primary">{{related_post.title}}</figcaption>
                 </figure>
             </a>
