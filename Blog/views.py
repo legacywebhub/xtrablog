@@ -1,5 +1,3 @@
-from turtle import pos
-from unicodedata import category
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.http import JsonResponse, HttpResponse
@@ -12,10 +10,10 @@ from django_pandas.io import read_frame
 
 # General variables
 xtrablog = XtraBlog.objects.last()
-categories = PostCategory.objects.all()
 
 # Create your views here.
 def login(request):
+    categories = PostCategory.objects.all()
     if request.method == "POST":
         if 'search-submit' in request.POST:
             search = request.POST['search']
@@ -70,6 +68,7 @@ def logout(request):
 
 
 def posts(request):
+    categories = PostCategory.objects.all()
     p = Paginator(Post.objects.all().order_by('-created_at'), 12)
     page = request.GET.get('page')
     posts = p.get_page(page)
@@ -97,6 +96,7 @@ def post(request, id):
     post = get_object_or_404(Post, pk=id)
     related_posts = Post.objects.filter(category=post.category).order_by('?')[:3]
     comments = Comment.objects.filter(post=post)
+    categories = PostCategory.objects.all()
 
     if request.method == "POST":
         if 'search-submit' in request.POST:
@@ -167,6 +167,7 @@ def post(request, id):
 
 
 def result(request, search):
+    categories = PostCategory.objects.all()
     category_results = Post.objects.filter(category=search)
     title_results = Post.objects.filter(title__contains=search)
     results = []
@@ -206,6 +207,7 @@ def result(request, search):
 
 
 def newsletter(request):
+    categories = PostCategory.objects.all()
     # getting all subscribers
     emails = Subscriber.objects.all()
     # the following line of codes converts the query to a list object
@@ -259,6 +261,7 @@ def newsletter(request):
 
 
 def contact(request):
+    categories = PostCategory.objects.all()
     if request.method == "POST":
         if 'message-submit' in request.POST:
             name = request.POST["name"]
@@ -293,6 +296,7 @@ def contact(request):
 
 
 def error404(request, exception):
+    categories = PostCategory.objects.all()
     if request.method=='POST':
         subscribe = request.POST['subscribe']
         subscribed = Subscriber.objects.filter(email=subscribe).exists()
@@ -307,6 +311,7 @@ def error404(request, exception):
 
 
 def serverError(request):
+    categories = PostCategory.objects.all()
     if request.method=='POST':
         subscribe = request.POST['subscribe']
         subscribed = Subscriber.objects.filter(email=subscribe).exists()
@@ -321,6 +326,7 @@ def serverError(request):
 
 
 def about(request):
+    categories = PostCategory.objects.all()
     if request.method=='POST':
         if 'subscribe-submit' in request.POST:
             subscribe = request.POST['subscribe']

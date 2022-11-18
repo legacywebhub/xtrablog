@@ -1,0 +1,1 @@
+web: gunicorn XtraBlog.wsgi --log-file -  
