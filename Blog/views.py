@@ -222,7 +222,7 @@ def newsletter(request):
             message = request.POST['message']
 
             if password == xtrablog.newsletter_password:
-                if file in request.POST:
+                if 'file' in request.POST:
                     file = request.POST['file']
 
                     try:
